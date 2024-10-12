@@ -5,6 +5,7 @@ import numpy as np
 from PIL import Image
 from PIL.PngImagePlugin import PngInfo
 from comfy.cli_args import args
+import time
 
 from ..client_s3 import get_s3_instance
 S3_INSTANCE = get_s3_instance()
@@ -24,7 +25,7 @@ class SaveImageS3:
         return {"required": {
             "images": ("IMAGE", ),
             "filename_prefix": ("STRING", {"default": "Image"}),
-            "objectname": ("STRING", {"default": "ObjectName"})},
+            "usingTimestamp": (["false", "true"],"true")},
             "hidden": {"prompt": "PROMPT", "extra_pnginfo": "EXTRA_PNGINFO"
             },
                 }
@@ -36,7 +37,7 @@ class SaveImageS3:
     OUTPUT_IS_LIST = (True,)
     CATEGORY = "ComfyS3"
 
-    def save_images(self, images, filename_prefix="ComfyUI", objectname="", prompt=None, extra_pnginfo=None):
+    def save_images(self, images, filename_prefix="ComfyUI", usingTimestamp="", prompt=None, extra_pnginfo=None):
         filename_prefix += self.prefix_append
         full_output_folder, filename, counter, subfolder, filename_prefix = S3_INSTANCE.get_save_path(filename_prefix, images[0].shape[1], images[0].shape[0])
         results = list()
@@ -54,8 +55,10 @@ class SaveImageS3:
                     for x in extra_pnginfo:
                         metadata.add_text(x, json.dumps(extra_pnginfo[x]))
             
-            file = f"{filename}_{objectname}.png"
-            # file = f"{filename}_{counter:05}_.png"
+            if usingTimestamp == "true":
+                timestamp = int(time.time())
+                file = f"{filename}_{timestamp}.png"
+            file = f"{filename}_{counter:05}.png"
             temp_file = None
             try:
                 # Create a temporary file
