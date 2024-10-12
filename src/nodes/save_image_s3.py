@@ -23,8 +23,8 @@ class SaveImageS3:
     def INPUT_TYPES(s):
         return {"required": {
             "images": ("IMAGE", ),
-            "filename_prefix": ("STRING", {"default": "Image"})},
-            "objectname": ("STRING", {"default": "ObjectName"}),
+            "filename_prefix": ("STRING", {"default": "Image"}),
+            "objectname": ("STRING", {"default": "ObjectName"})},
             "hidden": {"prompt": "PROMPT", "extra_pnginfo": "EXTRA_PNGINFO"
             },
                 }
