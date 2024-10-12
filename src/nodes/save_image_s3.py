@@ -24,7 +24,7 @@ class SaveImageS3:
         return {"required": {
             "images": ("IMAGE", ),
             "filename_prefix": ("STRING", {"default": "Image"})},
-            "objectname": ("STRING"),
+            "objectname": ("STRING", {"default": "ObjectName"}),
             "hidden": {"prompt": "PROMPT", "extra_pnginfo": "EXTRA_PNGINFO"
             },
                 }
