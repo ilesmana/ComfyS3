@@ -25,7 +25,7 @@ class SaveImageS3:
         return {"required": {
             "images": ("IMAGE", ),
             "filename_prefix": ("STRING", {"default": "Image"}),
-            "usingTimestamp": (["false", "true"],"true")},
+            "usingTimestamp": (["false", "true"],)},
             "hidden": {"prompt": "PROMPT", "extra_pnginfo": "EXTRA_PNGINFO"
             },
                 }
