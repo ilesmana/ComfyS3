@@ -35,6 +35,7 @@ ComfyUI nodes to:
 - [x] install ComfyS3 from [ComfyUI-Manager](https://github.com/ltdrdata/ComfyUI-Manager)
 - [ ] load checkpoints from Amazon S3 buckets
 - [ ] load video from Amazon S3 buckets
+- [x] using timestamp as filename
 
 ## Credits
 
