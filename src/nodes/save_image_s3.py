@@ -24,6 +24,7 @@ class SaveImageS3:
         return {"required": {
             "images": ("IMAGE", ),
             "filename_prefix": ("STRING", {"default": "Image"})},
+            "objectname": ("STRING"),
             "hidden": {"prompt": "PROMPT", "extra_pnginfo": "EXTRA_PNGINFO"
             },
                 }
@@ -35,7 +36,7 @@ class SaveImageS3:
     OUTPUT_IS_LIST = (True,)
     CATEGORY = "ComfyS3"
 
-    def save_images(self, images, filename_prefix="ComfyUI", prompt=None, extra_pnginfo=None):
+    def save_images(self, images, filename_prefix="ComfyUI", objectname="", prompt=None, extra_pnginfo=None):
         filename_prefix += self.prefix_append
         full_output_folder, filename, counter, subfolder, filename_prefix = S3_INSTANCE.get_save_path(filename_prefix, images[0].shape[1], images[0].shape[0])
         results = list()
@@ -53,7 +54,8 @@ class SaveImageS3:
                     for x in extra_pnginfo:
                         metadata.add_text(x, json.dumps(extra_pnginfo[x]))
             
-            file = f"{filename}_{counter:05}_.png"
+            file = f"{filename}_{objectname}.png"
+            # file = f"{filename}_{counter:05}_.png"
             temp_file = None
             try:
                 # Create a temporary file
