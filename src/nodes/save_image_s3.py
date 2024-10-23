@@ -59,7 +59,7 @@ class SaveImageS3:
                 timestamp = int(time.time())
                 file = f"{filename}_{timestamp}.png"
             else:
-                file = f"{filename}_{counter:05}.png"
+                file = f"{filename}.png"
             temp_file = None
             try:
                 # Create a temporary file
